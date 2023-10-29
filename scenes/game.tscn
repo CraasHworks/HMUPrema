@@ -14,7 +14,11 @@ script = ExtResource("1_hevob")
 [node name="Stage" parent="." instance=ExtResource("2_l8qhd")]
 
 [node name="Player" parent="." instance=ExtResource("3_goyem")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.5403, 0, -9)
 
 [node name="FloorItemRifle" parent="." instance=ExtResource("5_8iric")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.7427, 0.568962, -14.4995)
+
+[node name="Projectiles" type="Node3D" parent="."]
+
+[connection signal="shooting" from="Player" to="." method="_on_player_shooting"]

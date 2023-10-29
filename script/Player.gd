@@ -8,6 +8,16 @@ extends CharacterBody3D
 @onready var neck = $Head/neck
 @onready var eyes = $Head/neck/eyes
 @onready var camera_3d = $Head/neck/eyes/Camera3D
+@onready var animation_player = $AnimationPlayer
+@onready var ar_10_sound = $Ar10Sound
+@onready var gun_sound = $GunSound
+@onready var gun = $Head/neck/eyes/Camera3D/GunMount/Gun
+@onready var rifle = $Head/neck/eyes/Camera3D/GunMount/Rifle
+@onready var flash_timer = $FlashTimer
+@onready var flash = $Head/neck/eyes/Camera3D/GunMount/Flash
+
+# Signals
+signal shooting(pos, direction, protorato);
 
 # Speed variables
 var currentSpeed : float = 5.0
@@ -26,6 +36,7 @@ var freeLookTiltAmount: float = 4.5;
 # Input variables
 var lerpSpeed: float = 10.0
 var direction: Vector3 = Vector3.ZERO;
+var _latest_mouse_pos := Vector2.ZERO
 
 # States
 var walking: bool = false;
@@ -52,14 +63,18 @@ var headBobingCurrentIntensity: float = 0.0;
 var headBobingVector: Vector2 = Vector2.ZERO;
 var headBobingIndex: float = 0.0;
 
+var weaponState: = 0;
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Hides the mouse pointer
+	print(get_instance_id())
 
 func _input(event):
 	if event is InputEventMouseMotion:
+		_latest_mouse_pos = event.position
 		if freeLooking:
 			head.rotate_y(deg_to_rad(-event.relative.x * mouseSensitivity));
 			head.rotation.y = clamp(head.rotation.y, deg_to_rad(-120), deg_to_rad(120))
@@ -68,6 +83,22 @@ func _input(event):
 		
 		neck.rotate_x(deg_to_rad(-event.relative.y * mouseSensitivity))
 		neck.rotation.x = clamp(neck.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+	
+	if event is InputEventKey:
+		if Input.is_action_just_pressed("Weapon1"):
+			setActiveWeapon(1);
+		if Input.is_action_just_pressed("Weapon2"):
+			setActiveWeapon(2)
+		if Input.is_action_just_pressed("Weapon3"):
+			setActiveWeapon(3)
+			
+	if event is InputEventMouseButton:
+		if Input.is_action_just_pressed("Shoot"):
+			fireWeapon();
+
+func _PickupSignal(body):
+	print(body);
+	print("Hege");
 
 func _physics_process(delta):
 	# handle movement states
@@ -175,3 +206,38 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, currentSpeed)
 	
 	move_and_slide()
+
+func setActiveWeapon(WepIndex: int) ->void:
+	
+	if WepIndex == 1: 
+		weaponState = 1; 
+		rifle.visible = true;
+		gun.visible = false;
+	
+	if WepIndex == 2: 
+		weaponState = 2; 
+		rifle.visible = false;
+		gun.visible = true;
+	
+	if WepIndex == 3: 
+		weaponState = 3; 
+		rifle.visible = false;
+		gun.visible = false;
+
+func fireWeapon() -> void:
+	if !animation_player.is_playing():
+		flash.visible = true;
+		flash_timer.start();
+		var camVectorNormal = camera_3d.project_ray_normal(_latest_mouse_pos);
+		var bulletStartPos = $Head/neck/eyes/Camera3D/GunMount/BulletPoint.global_position;
+		shooting.emit(bulletStartPos, -camVectorNormal, camera_3d.global_rotation);
+	
+	if weaponState == 1: 
+		if !animation_player.is_playing():
+			animation_player.play("RifleRecoil");
+			ar_10_sound.play();
+	
+	if weaponState == 2: 
+		if !animation_player.is_playing():
+			animation_player.play("GunRecoil");
+			gun_sound.play();

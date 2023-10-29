@@ -1,15 +1,149 @@
-[gd_scene load_steps=5 format=3 uid="uid://fxptho8im22m"]
+[gd_scene load_steps=15 format=3 uid="uid://fxptho8im22m"]
 
 [ext_resource type="Script" path="res://script/Player.gd" id="1_dhypq"]
+[ext_resource type="Script" path="res://scenes/players/Flash.gd" id="2_by4ly"]
+[ext_resource type="ArrayMesh" uid="uid://dtg2fy0xnsmkh" path="res://assets/models/rifle.obj" id="2_uismd"]
+[ext_resource type="ArrayMesh" uid="uid://q13yvquw26ep" path="res://assets/models/gun.obj" id="3_yr3gt"]
+[ext_resource type="AudioStream" uid="uid://nkuq3w5t71gh" path="res://assets/sounds/Ar10.mp3" id="4_make7"]
+[ext_resource type="AudioStream" uid="uid://nvpptfgal8t6" path="res://assets/sounds/9mm.mp3" id="5_0qedl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tsthm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jj0w2"]
 height = 1.2
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_08uyt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fxka0"]
+transparency = 1
+albedo_color = Color(0.945098, 0.937255, 0.427451, 1)
+emission_enabled = true
+emission = Color(0.839216, 0.835294, 0.266667, 1)
+emission_energy_multiplier = 12.46
+emission_on_uv2 = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_st5h7"]
+material = SubResource("StandardMaterial3D_fxka0")
+radius = 0.025
+height = 0.025
+radial_segments = 4
+rings = 3
+
+[sub_resource type="Animation" id="Animation_gnthx"]
+resource_name = "RifleRecoil"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/neck/eyes/Camera3D/GunMount/Rifle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0298896, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.587992, 0, -0.786544), Vector3(0.587992, 0, -0.586544), Vector3(0.587992, 0, -0.786544)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/neck/eyes/Camera3D/GunMount/Rifle:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.030229, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0), Vector3(-0.483456, 3.14159, 0), Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k2g2h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/neck/eyes/Camera3D/GunMount/Rifle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.587992, 0, -0.786544)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/neck/eyes/Camera3D/GunMount/Rifle:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head/neck/eyes/Camera3D/GunMount/Gun:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.4, 0.0676866, -0.613783)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Head/neck/eyes/Camera3D/GunMount/Gun:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gnrn7"]
+resource_name = "GunRecoil"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/neck/eyes/Camera3D/GunMount/Gun:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0551696, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.4, 0.0676866, -0.613783), Vector3(0.4, 0.0676866, -0.413783), Vector3(0.4, 0.0676866, -0.613783)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/neck/eyes/Camera3D/GunMount/Gun:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0572706, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0), Vector3(-0.802851, 3.14159, 0), Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wpjrj"]
+_data = {
+"GunRecoil": SubResource("Animation_gnrn7"),
+"RESET": SubResource("Animation_k2g2h"),
+"RifleRecoil": SubResource("Animation_gnthx")
+}
 
 [node name="Player" type="CharacterBody3D"]
+collision_layer = 257
+collision_mask = 257
 script = ExtResource("1_dhypq")
 
 [node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
@@ -29,14 +163,48 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7864, 0)
 [node name="eyes" type="Node3D" parent="Head/neck"]
 
 [node name="Camera3D" type="Camera3D" parent="Head/neck/eyes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+
+[node name="GunMount" type="Node3D" parent="Head/neck/eyes/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0866004, -0.341218, 0.0499308)
+
+[node name="Flash" type="MeshInstance3D" parent="Head/neck/eyes/Camera3D/GunMount"]
+transform = Transform3D(-8, -1.20797e-06, -5.28019e-14, 0, -3.49691e-07, 8, -1.20797e-06, 8, 3.49691e-07, 0.589932, 0.0511602, -1.25389)
+visible = false
+mesh = SubResource("SphereMesh_st5h7")
+skeleton = NodePath("../Rifle")
+script = ExtResource("2_by4ly")
+
+[node name="Gun" type="MeshInstance3D" parent="Head/neck/eyes/Camera3D/GunMount"]
+transform = Transform3D(-8, 0, 1.20797e-06, 0, 8, 0, -1.20797e-06, 0, -8, 0.4, 0.0676866, -0.613783)
+visible = false
+mesh = ExtResource("3_yr3gt")
+skeleton = NodePath("")
+
+[node name="Rifle" type="MeshInstance3D" parent="Head/neck/eyes/Camera3D/GunMount"]
+transform = Transform3D(-8, 0, 1.20797e-06, 0, 8, 0, -1.20797e-06, 0, -8, 0.587992, 0, -0.786544)
+mesh = ExtResource("2_uismd")
+skeleton = NodePath("")
+
+[node name="BulletPoint" type="Node3D" parent="Head/neck/eyes/Camera3D/GunMount"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -5)
 
 [node name="HeightCheckRay" type="RayCast3D" parent="."]
 target_position = Vector3(0, 2, 0)
 
-[node name="PlayerArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-monitoring = false
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wpjrj")
+}
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_08uyt")
+[node name="Ar10Sound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_make7")
+
+[node name="GunSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_0qedl")
+
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.06
+one_shot = true
+
+[connection signal="timeout" from="FlashTimer" to="Head/neck/eyes/Camera3D/GunMount/Flash" method="_on_flash_timer_timeout"]

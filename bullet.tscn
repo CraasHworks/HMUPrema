@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0wom02epv2k4"]
+
+[sub_resource type="GDScript" id="GDScript_y2w0y"]
+script/source = "extends Node3D
+
+#imports
+@onready var ray_cast_3d = $RayCast3D
+
+
+#Bulletvarsa
+var velocity := Vector3.ZERO;
+@export var speed :=  0.05;
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	self.transform.origin -= velocity * delta;
+	
+	ray_cast_3d.force_raycast_update()
+	if ray_cast_3d.is_colliding():
+		var collider = ray_cast_3d.get_collider()
+		print(\"Bullet hit %s\" % [collider.name])
+
+		# Move the bullet back to the position of the collision
+		self.global_transform.origin = ray_cast_3d.get_collision_point()
+
+		# Hit object
+		#elif collider.is_in_group(\"item\"):
+			# Nudge the object
+			#var force := _mass * _velocity.length()
+			#collider.apply_central_impulse(-self.transform.basis.z * force)
+			#is_destroyed = true
+		# Hit something unexpected
+		#else:
+			#is_destroyed = true
+
+		# Add bullet spark
+		#Global.create_bullet_spark(self.global_transform.origin)
+
+	# Update glow
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tr5xo"]
+albedo_color = Color(1, 1, 0.443137, 1)
+emission_enabled = true
+emission = Color(1, 1, 0.666667, 1)
+emission_on_uv2 = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ftttb"]
+material = SubResource("StandardMaterial3D_tr5xo")
+radius = 0.3
+height = 1.0
+radial_segments = 5
+rings = 1
+
+[node name="Bullet" type="Node3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+script = SubResource("GDScript_y2w0y")
+speed = 5.0
+
+[node name="BulletShape" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_ftttb")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 30, 0, 0)
+target_position = Vector3(30, 0, 0)
