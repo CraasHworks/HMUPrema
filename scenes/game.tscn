@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://birx0bct1v3cd"]
+
+[ext_resource type="PackedScene" uid="uid://b01avh0w6y5l1" path="res://scenes/maps/environment.tscn" id="1_f3v4f"]
+[ext_resource type="Script" path="res://script/game.gd" id="1_hevob"]
+[ext_resource type="PackedScene" uid="uid://bqsgh45r53v6p" path="res://scenes/maps/testMap.tscn" id="2_l8qhd"]
+[ext_resource type="PackedScene" uid="uid://fxptho8im22m" path="res://scenes/players/FpsTestPlayer1.tscn" id="3_goyem"]
+[ext_resource type="PackedScene" uid="uid://6xnxrk3tr0t3" path="res://scenes/items/floor_item_rifle.tscn" id="5_8iric"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_hevob")
+
+[node name="Environment" parent="." instance=ExtResource("1_f3v4f")]
+
+[node name="Stage" parent="." instance=ExtResource("2_l8qhd")]
+
+[node name="Player" parent="." instance=ExtResource("3_goyem")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+
+[node name="FloorItemRifle" parent="." instance=ExtResource("5_8iric")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.7427, 0.568962, -14.4995)

@@ -1,0 +1,113 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqsgh45r53v6p"]
+
+[ext_resource type="Texture2D" uid="uid://d223qxjvy58hj" path="res://assets/textures/grids/Dark/texture_09.png" id="1_lsrli"]
+[ext_resource type="Texture2D" uid="uid://dqgbgrchvfwve" path="res://assets/textures/grids/Green/texture_05.png" id="2_pr6rs"]
+[ext_resource type="Texture2D" uid="uid://bm8djub5otix2" path="res://assets/textures/grids/Purple/texture_02.png" id="3_47lnd"]
+[ext_resource type="PackedScene" uid="uid://6xnxrk3tr0t3" path="res://scenes/items/floor_item_rifle.tscn" id="4_7vaw3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_siis3"]
+albedo_texture = ExtResource("1_lsrli")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6edyr"]
+albedo_texture = ExtResource("2_pr6rs")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0cxol"]
+albedo_texture = ExtResource("3_47lnd")
+uv1_triplanar = true
+
+[node name="Stage" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00799942, -0.0305839, 0.0119228)
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_siis3")
+
+[node name="Outerwall2" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 7, 0)
+use_collision = true
+size = Vector3(2, 14, 100)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="Outerwall1" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 7, 0)
+use_collision = true
+size = Vector3(2, 14, 100)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="Outerwall3" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 7, 50)
+use_collision = true
+size = Vector3(2, 14, 100)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="Outerwall4" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 7, -50)
+use_collision = true
+size = Vector3(2, 14, 100)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="MidTower" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 1.90735e-06)
+use_collision = true
+size = Vector3(10, 30, 10)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="CenterWall1" type="CSGBox3D" parent="MidTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11, 0)
+use_collision = true
+size = Vector3(30, 8, 2)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="CenterWall2" type="CSGBox3D" parent="MidTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.5, -11, 0)
+use_collision = true
+size = Vector3(25, 8, 2)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="CenterWall3" type="CSGBox3D" parent="MidTower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.5, -11, 0)
+use_collision = true
+size = Vector3(25, 8, 2)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="CenterWall4" type="CSGBox3D" parent="MidTower"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -11, -36.5)
+use_collision = true
+size = Vector3(25, 8, 2)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="CenterWall5" type="CSGBox3D" parent="MidTower"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -11, 36.5)
+use_collision = true
+size = Vector3(25, 8, 2)
+material = SubResource("StandardMaterial3D_6edyr")
+
+[node name="Corner" type="Node3D" parent="."]
+
+[node name="Corner floor" type="CSGBox3D" parent="Corner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5, 6, -41.5)
+calculate_tangents = false
+use_collision = true
+size = Vector3(15, 1, 15)
+material = SubResource("StandardMaterial3D_0cxol")
+
+[node name="ramp1" type="CSGBox3D" parent="Corner"]
+transform = Transform3D(1, 0, 0, 0, 0.906308, -0.422618, 0, 0.422618, 0.906308, -32.4979, 2.9, -40.2154)
+calculate_tangents = false
+use_collision = true
+size = Vector3(3, 0.5, 15)
+material = SubResource("StandardMaterial3D_0cxol")
+
+[node name="rampLanding1" type="CSGBox3D" parent="Corner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 6, -47.5)
+calculate_tangents = false
+use_collision = true
+size = Vector3(3, 1, 3)
+material = SubResource("StandardMaterial3D_0cxol")
+
+[node name="FloorItemRifle" parent="." instance=ExtResource("4_7vaw3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 12.5416)
