@@ -15,6 +15,8 @@ extends CharacterBody3D
 @onready var rifle = $Head/neck/eyes/Camera3D/GunMount/Rifle
 @onready var flash_timer = $FlashTimer
 @onready var flash = $Head/neck/eyes/Camera3D/GunMount/Flash
+@onready var bullet_point = $Head/neck/eyes/Camera3D/GunMount/BulletPoint
+
 
 # Signals
 signal shooting(pos, direction, protorato);
@@ -229,8 +231,8 @@ func fireWeapon() -> void:
 		flash.visible = true;
 		flash_timer.start();
 		var camVectorNormal = camera_3d.project_ray_normal(_latest_mouse_pos);
-		var bulletStartPos = $Head/neck/eyes/Camera3D/GunMount/BulletPoint.global_position;
-		shooting.emit(bulletStartPos, -camVectorNormal, camera_3d.global_rotation);
+		var bulletStartPos = bullet_point.global_position;
+		shooting.emit(bulletStartPos, -camVectorNormal, bullet_point.global_rotation);
 	
 	if weaponState == 1: 
 		if !animation_player.is_playing():
